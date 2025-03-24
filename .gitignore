@@ -172,3 +172,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# テスト用の一時ファイル
+/input.md
+/output.txt
