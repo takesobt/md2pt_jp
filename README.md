@@ -1,7 +1,16 @@
 # md2pt_jp
 ## Version 1.1
 
-Markdownで書かれた日本語小説を、小説投稿サイト（例：「小説家になろう」など）向けのプレーンテキストに変換するツールです。
+NotionのページなどMarkdownで書かれた日本語小説を、小説投稿サイト（例：「小説家になろう」など）向けのプレーンテキストに変換するツールです。
+
+## 🔧 開発・実行には Poetry が必要です
+
+Poetry を使って依存をインストール：
+
+```bash
+poetry install
+poetry run python -m md2pt_jp.cli ...
+```
 
 ## ✅ 対応している変換
 
