@@ -176,3 +176,7 @@ cython_debug/
 # テスト用の一時ファイル
 /input.md
 /output.txt
+
+# テスト・変換用フォルダを無視
+/novel_md/
+/novel_txt/
