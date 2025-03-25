@@ -10,3 +10,8 @@ def test_custom_heading_levels():
     input_text = "#第一話\n##登場人物\n###涼子の能力"
     expected = "☆EPISODE☆第一話\n★★登場人物★★\n【涼子の能力】"
     assert convert_markdown_to_plaintext(input_text) == expected
+
+def test_horizontal_rule_conversion():
+    input_text = "本文\n---\nつづき"
+    expected = "本文\n＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝\nつづき"
+    assert convert_markdown_to_plaintext(input_text) == expected
