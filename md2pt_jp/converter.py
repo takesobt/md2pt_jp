@@ -5,8 +5,13 @@ import re
 def convert_markdown_to_plaintext(markdown_text: str) -> str:
     text = markdown_text
 
-    # Step 1: 既に【】がついている見出しをクリーンに（#【見出し】 → #見出し）
+    # Step 1-1: 既に【】がついている見出しをクリーンに（#【見出し】 → #見出し）
     text = re.sub(r'^(#+)\s*【(.*?)】', r'\1 \2', text, flags=re.MULTILINE)
+    # Step 1-2: 既に★★ ★★がついている見出しをクリーンに（#★★見出し★★ → #見出し）
+    text = re.sub(r'^(#+)\s*★★(.*?)★★', r'\1 \2', text, flags=re.MULTILINE)
+    # Step 1-3: 既に☆EPISODE☆がついている見出しをクリーンに（#☆EPISODE☆見出し → #見出し）
+    #text = re.sub(r'^(#+)\s*☆EPISODE☆(.*?)', r'\1 \2', text, flags=re.MULTILINE)
+    text = re.sub(r'^(#+)\s*☆EPISODE☆\s*(.+)', r'\1 \2', text, flags=re.MULTILINE)
 
     # Step 2: ###（見出し3）→ 【見出し３】
     text = re.sub(r'^###\s*(.+)', lambda m: f'【{m.group(1).strip()}】', text, flags=re.MULTILINE)
