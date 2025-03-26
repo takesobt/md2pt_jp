@@ -50,7 +50,7 @@ poetry run python -m md2pt_jp.cli input_folder/ output_folder/ --recursive
 poetry run python -m md2pt_jp.cli input_folder/ output_folder/ --recursive --overwrite
 ```
 ### ⑤ logファイルを出力する場合
-・--log をつけると、md2pt_jp.logファイルにに INFO / ERROR logが出力されます。
+・--log をつけると、md2pt_jp.logファイルに INFO / ERROR logが出力されます。
 ```bash
 poetry run python -m md2pt_jp.cli input_folder/ output_folder/ --recursive --overwrite --log
 ```
