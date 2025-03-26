@@ -1,5 +1,5 @@
 # md2pt_jp
-## Version 1.1
+## Version 1.2
 
 NotionのページなどMarkdownで書かれた日本語小説を、小説投稿サイト（例：「小説家になろう」など）向けのプレーンテキストに変換するツールです。
 
@@ -48,4 +48,9 @@ poetry run python -m md2pt_jp.cli input_folder/ output_folder/ --recursive
 ・--overwrite をつけると、既存ファイルを強制的に上書きします。
 ```bash
 poetry run python -m md2pt_jp.cli input_folder/ output_folder/ --recursive --overwrite
+```
+### ⑤ logファイルを出力する場合
+・--log をつけると、md2pt_jp.logファイルにに INFO / ERROR logが出力されます。
+```bash
+poetry run python -m md2pt_jp.cli input_folder/ output_folder/ --recursive --overwrite --log
 ```

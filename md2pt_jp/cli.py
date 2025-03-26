@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 import sys
+import logging
 from md2pt_jp.converter import convert_markdown_to_plaintext
 
 
@@ -12,7 +13,21 @@ def parse_args():
     parser.add_argument("output_dir", type=Path, help="Path to output directory")
     parser.add_argument("--recursive", action="store_true", help="Recursively search subdirectories for .md files")
     parser.add_argument("--overwrite", action="store_true", help="Overwrite existing output files")
+    parser.add_argument("--log", action="store_true", help="Output conversion log to md2pt_jp.log")
     return parser.parse_args()
+
+
+def setup_logger(enable_log: bool):
+    if enable_log:
+        logging.basicConfig(
+            filename="md2pt_jp.log",
+            level=logging.INFO,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            encoding="utf-8",
+            filemode="a",  # 追記モード
+        )
+    else:
+        logging.basicConfig(level=logging.CRITICAL)  # ログなしモード
 
 
 def collect_md_files(input_path: Path, recursive: bool) -> list[Path]:
@@ -32,29 +47,37 @@ def compute_output_path(input_file: Path, input_base: Path, output_base: Path) -
 
 def main():
     args = parse_args()
+    setup_logger(args.log)
 
     md_files = collect_md_files(args.input_path, args.recursive)
 
     if not md_files:
+        logging.warning("No .md files found to convert.")
         sys.exit("No .md files found to convert.")
 
     for md_file in md_files:
         output_path = compute_output_path(md_file, args.input_path, args.output_dir)
 
         if not args.overwrite and output_path.exists():
+            logging.error(f"Skipped: Output file already exists: {output_path}")
             sys.exit(f"Error: Output file already exists: {output_path}")
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        with md_file.open("r", encoding="utf-8") as f:
-            md_content = f.read()
+        try:
+            with md_file.open("r", encoding="utf-8") as f:
+                md_content = f.read()
 
-        plain_text = convert_markdown_to_plaintext(md_content)
+            plain_text = convert_markdown_to_plaintext(md_content)
 
-        with output_path.open("w", encoding="utf-8") as f:
-            f.write(plain_text)
+            with output_path.open("w", encoding="utf-8") as f:
+                f.write(plain_text)
 
-        print(f"Converted: {md_file} → {output_path}")
+            logging.info(f"Converted: {md_file} → {output_path}")
+            # print(f"Converted: {md_file} → {output_path}")
+        except Exception as e:
+            logging.error(f"Failed: {md_file} → {output_path} ({e})")
+            print(f"Error converting {md_file}: {e}", file=sys.stderr)
 
     print("✅ All files converted successfully.")
 
