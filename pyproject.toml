@@ -1,11 +1,11 @@
 [project]
 name = "md2pt-jp"
-version = "0.1.0"
-description = "Convert Markdowned text to Plain text Jpanese version"
+version = "1.2.0"
+description = "Convert Markdowned text to Plain text Japanese version"
 authors = [
-    {name = "takesobt",email = "takeshi.obata@gmail.com"}
+  { name = "takesobt", email = "takesobt@users.noreply.github.com" }
 ]
-license = {text = "MIT"}
+license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

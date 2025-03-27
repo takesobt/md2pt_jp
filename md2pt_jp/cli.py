@@ -24,10 +24,10 @@ def setup_logger(enable_log: bool):
             level=logging.INFO,
             format="%(asctime)s - %(levelname)s - %(message)s",
             encoding="utf-8",
-            filemode="a",  # 追記モード
+            filemode="a",  # append mode
         )
     else:
-        logging.basicConfig(level=logging.CRITICAL)  # ログなしモード
+        logging.basicConfig(level=logging.CRITICAL)  # logging.CRITICAL
 
 
 def collect_md_files(input_path: Path, recursive: bool) -> list[Path]:
@@ -73,8 +73,10 @@ def main():
             with output_path.open("w", encoding="utf-8") as f:
                 f.write(plain_text)
 
-            logging.info(f"Converted: {md_file} → {output_path}")
-            # print(f"Converted: {md_file} → {output_path}")
+            if args.log:
+                logging.info(f"Converted: {md_file} → {output_path}") 
+            else: 
+                print(f"Converted: {md_file} → {output_path}")
         except Exception as e:
             logging.error(f"Failed: {md_file} → {output_path} ({e})")
             print(f"Error converting {md_file}: {e}", file=sys.stderr)

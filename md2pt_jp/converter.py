@@ -5,11 +5,15 @@ import re
 def convert_markdown_to_plaintext(markdown_text: str) -> str:
     text = markdown_text
 
+    # --- オリジナルのmarkdown情報の変換 ---
+
     # Step 1: 見出しの変換の前処理
     # Step 1-1: 既に【】がついている見出しをクリーンに（#【見出し】 → #見出し）
     text = re.sub(r'^(#+)\s*【(.*?)】', r'\1 \2', text, flags=re.MULTILINE)
+
     # Step 1-2: 既に★★がついている見出しをクリーンに（#★★見出し★★ → #見出し）
     text = re.sub(r'^(#+)\s*★★(.*?)★★', r'\1 \2', text, flags=re.MULTILINE)
+
     # Step 1-3: 既に☆EPISODE☆がついている見出しをクリーンに（#☆EPISODE☆見出し → #見出し）
     text = re.sub(r'^(#+)\s*☆EPISODE☆\s*(.+)', r'\1 \2', text, flags=re.MULTILINE)
 
@@ -22,10 +26,10 @@ def convert_markdown_to_plaintext(markdown_text: str) -> str:
     # Step 4: #（見出し1）→ ☆EPISODE☆見出し１
     text = re.sub(r'^#\s*(.+)', lambda m: f'☆EPISODE☆{m.group(1).strip()}', text, flags=re.MULTILINE)
 
-    # 区切り線（---）を全角線に変換
+    # Step 5: 区切り線（---）を全角線に変換
     text = re.sub(r'^-{3,}\s*$', '＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝', text, flags=re.MULTILINE)
 
-    # --- 以下は以前の処理と同じ ---
+    # --- 以下は一般的なMarkdown情報の変換 ---
 
     # 強調記号の削除（**text** → text）
     text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
