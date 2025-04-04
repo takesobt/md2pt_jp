@@ -27,7 +27,7 @@ def convert_markdown_to_plaintext(markdown_text: str) -> str:
     text = re.sub(r'^#\s*(.+)', lambda m: f'☆EPISODE☆{m.group(1).strip()}', text, flags=re.MULTILINE)
 
     # Step 5: 区切り線（---）を全角線に変換
-    text = re.sub(r'^-{3,}\s*$', '］］］］］］］］］］］］］］］］］］］］］］］', text, flags=re.MULTILINE)
+    text = re.sub(r'^-{3,}\s*$', '＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝', text, flags=re.MULTILINE)
 
     # Step 6: 画像リンク行（Markdown: ![...](...)）を削除
     text = re.sub(r'^!\[.*?\]\(.*?\)\s*$', '', text, flags=re.MULTILINE)
